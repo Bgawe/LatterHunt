@@ -1,0 +1,11 @@
+python3
+kivy
+https://github.com/kivymd/KivyMD/archive/master.zip
+materialyoucolor
+exceptiongroup
+asyncgui
+asynckivy
+pillow
+numpy
+libffi
+pyjnius
