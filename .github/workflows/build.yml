@@ -1,0 +1,57 @@
+name: Build APK with Buildozer
+
+on:
+  push:
+    branches:
+      - main  # Atau sesuaikan dengan branch yang kamu inginkan
+  pull_request:
+    branches:
+      - main  # Atau sesuaikan dengan branch yang kamu inginkan
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout kode sumber
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Setup Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'  # Sesuaikan dengan versi Python yang dibutuhkan aplikasi kamu
+
+      # Install dependencies (Buildozer dan alat lain)
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            python3-dev \
+            build-essential \
+            libssl-dev \
+            libffi-dev \
+            python3-pip \
+            git \
+            unzip \
+            openjdk-8-jdk \
+            zip
+          python3 -m pip install --upgrade pip
+          python3 -m pip install buildozer
+
+      # Install dependensi proyek kamu (misalnya Kivy, KivyMD, dll.)
+      - name: Install project dependencies
+        run: |
+          pip install -r requirements.txt
+
+      # Build APK menggunakan Buildozer
+      - name: Build APK
+        run: |
+          buildozer android debug
+          
+      # Upload APK yang dihasilkan sebagai artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-apk
+          path: ./bin/*.apk  # Ganti dengan path yang sesuai jika APK disimpan di lokasi yang berbeda
