@@ -42,9 +42,9 @@ jobs:
       run: |
         buildozer -v android debug
 
-    # Optional: Step 7: Upload the APK as an artifact
+    # Step 7: Upload APK artifact
     - name: Upload APK artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: android-apk
         path: bin/*.apk
