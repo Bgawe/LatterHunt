@@ -3,48 +3,44 @@ name: Build Kivy Android App
 on:
   push:
     branches:
-      - main
+      - main  # Ganti dengan cabang yang sesuai
+  pull_request:
+    branches:
+      - main  # Ganti dengan cabang yang sesuai
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Menggunakan mesin Ubuntu terbaru
 
     steps:
-    # Step 1: Checkout repository
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-    # Step 2: Set up Python (ensure version 3.9 or higher)
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v4
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: '3.9'  # Versi Python yang sesuai dengan project Anda
 
-    # Step 3: Install system dependencies (including libffi-dev)
     - name: Install system dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y libffi-dev
+        sudo apt-get install -y python3-dev build-essential
 
-    # Step 4: Install dependencies from requirements.txt
-    - name: Install dependencies
+    - name: Install pip dependencies
       run: |
-        pip install --upgrade pip
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Step 5: Install Buildozer
-    - name: Install Buildozer
+    - name: Build with Buildozer
       run: |
+        # Install Buildozer dan dependensi terkait
         pip install buildozer
+        buildozer android debug
 
-    # Step 6: Build the Android app using Buildozer
-    - name: Build Android app
-      run: |
-        buildozer -v android debug
-
-    # Step 7: Upload APK artifact
-    - name: Upload APK artifact
-      uses: actions/upload-artifact@v4
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
       with:
-        name: android-apk
-        path: bin/*.apk
+        name: android-debug-apk
+        path: bin/*.apk  # Lokasi APK hasil build
+
