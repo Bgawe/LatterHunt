@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,https://github.com/kivymd/KivyMD/archive/master.zip,materialyoucolor, exceptiongroup,asyncgui,asynckivy, pillow,numpy,libffi,pyjnius
+requirements = python3,kivy,https://github.com/kivymd/KivyMD/archive/master.zip,materialyoucolor, exceptiongroup,asyncgui,asynckivy, pillow,numpy,pyjnius
 
 
 # (str) Custom source folders for requirements
@@ -65,7 +65,7 @@ orientation = landscape
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3
+osx.python_version = 3.9
 
 # Kivy version to use
 osx.kivy_version = 2.3.0
