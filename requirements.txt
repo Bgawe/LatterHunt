@@ -1,10 +1,8 @@
-kivy
-https://github.com/kivymd/KivyMD/archive/master.zip
-materialyoucolor
-exceptiongroup
-asyncgui
-asynckivy
-pillow
-numpy
-libffi
-pyjnius
+kivy==2.3.0
+git+https://github.com/kivymd/KivyMD.git
+materialyoucolor==2.0.9
+exceptiongroup==1.2.2
+asyncgui==0.7.1
+asynckivy==0.7.0
+pillow==11.0.0
+numpy==1.24.4  # Pastikan ini adalah versi yang sesuai dengan Python 3.9
