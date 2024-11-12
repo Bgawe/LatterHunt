@@ -1,57 +1,50 @@
-name: Build APK with Buildozer
+name: Build Kivy Android App
 
 on:
   push:
     branches:
-      - main  # Atau sesuaikan dengan branch yang kamu inginkan
-  pull_request:
-    branches:
-      - main  # Atau sesuaikan dengan branch yang kamu inginkan
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      # Checkout kode sumber
-      - name: Checkout code
-        uses: actions/checkout@v3
+    # Step 1: Checkout repository
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      # Setup Python environment
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'  # Sesuaikan dengan versi Python yang dibutuhkan aplikasi kamu
+    # Step 2: Set up Python (ensure version 3.9 or higher)
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
 
-      # Install dependencies (Buildozer dan alat lain)
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y \
-            python3-dev \
-            build-essential \
-            libssl-dev \
-            libffi-dev \
-            python3-pip \
-            git \
-            unzip \
-            openjdk-8-jdk \
-            zip
-          python3 -m pip install --upgrade pip
-          python3 -m pip install buildozer
+    # Step 3: Install system dependencies (including libffi-dev)
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libffi-dev
 
-      # Install dependensi proyek kamu (misalnya Kivy, KivyMD, dll.)
-      - name: Install project dependencies
-        run: |
-          pip install -r requirements.txt
+    # Step 4: Install dependencies from requirements.txt
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
 
-      # Build APK menggunakan Buildozer
-      - name: Build APK
-        run: |
-          buildozer android debug
-          
-      # Upload APK yang dihasilkan sebagai artifact
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-apk
-          path: ./bin/*.apk  # Ganti dengan path yang sesuai jika APK disimpan di lokasi yang berbeda
+    # Step 5: Install Buildozer
+    - name: Install Buildozer
+      run: |
+        pip install buildozer
+
+    # Step 6: Build the Android app using Buildozer
+    - name: Build Android app
+      run: |
+        buildozer -v android debug
+
+    # Optional: Step 7: Upload the APK as an artifact
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: android-apk
+        path: bin/*.apk
