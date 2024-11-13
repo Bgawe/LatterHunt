@@ -352,6 +352,12 @@ android.allow_backup = True
 # (str) extra command line arguments to pass when invoking pythonforandroid.toolchain
 #p4a.extra_args =
 
+android.release = True
+android.keystore = my-release-key.keystore
+android.keyalias = my-key-alias
+android.keystore_pass = <password-keystore>
+android.keyalias_pass = <password-alias>
+
 
 
 #
