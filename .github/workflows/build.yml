@@ -11,11 +11,17 @@ jobs:
       - name: Upgrade Buildozer
         run: pip install --upgrade buildozer
 
-      - name: Clean Build Cache
-        run: buildozer android clean
+      - name: Build APK
+        uses: digreatbrian/buildozer-action@v2
+        with:
+          python-version: 3.8
+          buildozer-cmd: buildozer -v android debug
 
       - name: Build AAB
-        run: buildozer -v android release
+        uses: digreatbrian/buildozer-action@v2
+        with:
+          python-version: 3.8
+          buildozer-cmd: buildozer -v android release
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
