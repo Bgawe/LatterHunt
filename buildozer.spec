@@ -1,7 +1,7 @@
 [app]
 
 # (str) Title of your application
-title = LatterHunt-Play end Learn
+title = LatterHunt - Play end Learn
 
 # (str) Package name
 package.name = GameOn
