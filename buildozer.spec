@@ -4,10 +4,10 @@
 title = LatterHunt - Play end Learn
 
 # (str) Package name
-package.name = GameOn
+package.name = LatterHunt
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = com.LatterHunt.com
 
 # (str) Source code where the main.py live
 source.dir = .
