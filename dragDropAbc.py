@@ -1,4 +1,3 @@
-# test.py
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image
@@ -31,10 +30,10 @@ Builder.load_string('''
     Image:
         id: image
         source: root.image_source
-        size_hint: None, None
-        size: 150, 150
+        size_hint: 0.4, 0.4  # Ukuran relatif terhadap ukuran layar
         pos: root.pos
         opacity: root.opacity_value
+
 
 <GameLayout>:
     drag_image: drag_image
@@ -45,88 +44,98 @@ Builder.load_string('''
         allow_stretch: True
         keep_ratio: False
         size_hint: 1, 1
-        
+
     ImageButton:
         source: "images/back.png"
         size_hint: None, None
-        size: 150, 70
+        size: 250,100
         pos_hint: {"x": 0.05, "y": 0.85}
         on_release: root.go_back()
-
-    
 
     # Baris 1
     DropArea:
         id: drop_area1
-        pos: 450, 550
+        pos_hint: {"x": 0.25, "y": 0.75}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/a.png"
         sound_source: "sounds/a.mp3"
 
     DropArea:
         id: drop_area2
-        pos: 650, 550
+        pos_hint: {"x": 0.45, "y": 0.75}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/b.png"
         sound_source: "sounds/b.mp3"
 
     DropArea:
         id: drop_area3
-        pos: 850, 550
+        pos_hint: {"x": 0.65, "y": 0.75}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/c.png"
         sound_source: "sounds/c.mp3"
 
     DropArea:
         id: drop_area4
-        pos: 1050, 550
+        pos_hint: {"x": 0.85, "y": 0.75}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/d.png"
         sound_source: "sounds/d.mp3"
 
     # Baris 2
     DropArea:
         id: drop_area5
-        pos: 450, 350
+        pos_hint: {"x": 0.25, "y": 0.45}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/e.png"
         sound_source: "sounds/e.mp3"
 
     DropArea:
         id: drop_area6
-        pos: 650, 350
+        pos_hint: {"x": 0.45, "y": 0.45}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/f.png"
         sound_source: "sounds/f.mp3"
 
     DropArea:
         id: drop_area7
-        pos: 850, 350
+        pos_hint: {"x": 0.65, "y": 0.45}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/g.png"
         sound_source: "sounds/g.mp3"
 
     DropArea:
         id: drop_area8
-        pos: 1050, 350
+        pos_hint: {"x": 0.85, "y": 0.45}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/h.png"
         sound_source: "sounds/h.mp3"
 
     # Baris 3
     DropArea:
         id: drop_area9
-        pos: 450, 150
+        pos_hint: {"x": 0.25, "y": 0.2}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/i.png"
         sound_source: "sounds/i.mp3"
 
     DropArea:
         id: drop_area10
-        pos: 650, 150
+        pos_hint: {"x": 0.45, "y": 0.2}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/j.png"
         sound_source: "sounds/j.mp3"
 
     DropArea:
         id: drop_area11
-        pos: 850, 150
+        pos_hint: {"x": 0.65, "y": 0.2}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/k.png"
         sound_source: "sounds/k.mp3"
 
     DropArea:
         id: drop_area12
-        pos: 1050, 150
+        pos_hint: {"x": 0.85, "y": 0.2}
+        size_hint: 0.3, 0.25
         image_source: "images/AbcAlphabet/l.png"
         sound_source: "sounds/l.mp3"
 
@@ -205,6 +214,7 @@ class DropArea(Widget):
     sound_source = StringProperty("")
 
 # Kelas GameLayout untuk menyusun game
+# Kelas GameLayout untuk menyusun game
 class GameLayout(FloatLayout):
     drag_image = ObjectProperty(None)
     completed_image_widget = ObjectProperty(None)
@@ -239,6 +249,10 @@ class GameLayout(FloatLayout):
         available_images = [img for img in self.images if img not in self.completed_images]
         if available_images:
             self.current_image = random.choice(available_images)
+            # Set ukuran drop area sesuai dengan ukuran drag image
+            for drop_area in self.get_drop_areas():
+                drop_area.size = self.drag_image.size  # Menyamakan ukuran drop area dengan drag image
+
             # Tampilkan drag image kembali setelah selesai
             self.drag_image.opacity = 1
         else:
@@ -279,7 +293,7 @@ class GameLayout(FloatLayout):
     
     def go_back(self):
         app = App.get_running_app()
-        app.root.current = 'lowercase_letter_screen'    
+        app.root.current = 'lowercase_letter_screen'
 
 # Kelas DragDropScreen untuk menampilkan permainan
 class DragDropScreen(Screen):
@@ -292,5 +306,3 @@ if __name__ == '__main__':
     class DragDropApp(App):
         def build(self):
             return DragDropScreen()
-
-    DragDropApp().run()
