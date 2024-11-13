@@ -355,8 +355,8 @@ android.allow_backup = True
 android.release = True
 android.keystore = my-release-key.keystore
 android.keyalias = my-key-alias
-android.keystore_pass = <password-keystore>
-android.keyalias_pass = <password-alias>
+android.keystore_pass = 12345678
+android.keyalias_pass = 12345678
 
 
 
