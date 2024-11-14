@@ -8,14 +8,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Decode keystore
+        run: echo "$KEYSTORE_FILE" | base64 --decode > my-release-key.keystore
+
       - name: Upgrade Buildozer
         run: pip install --upgrade buildozer
 
-      - name: Build APK
-        uses: digreatbrian/buildozer-action@v2
-        with:
-          python-version: 3.8
-          buildozer-cmd: buildozer -v android debug
+      - name: Clean Build Cache
+        run: buildozer android clean
 
       - name: Build AAB
         uses: digreatbrian/buildozer-action@v2
