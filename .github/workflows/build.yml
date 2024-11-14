@@ -8,27 +8,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Upgrade Buildozer
+        run: pip install --upgrade buildozer
+
       - name: Clean Build Cache
         run: |
           rm -rf .buildozer
           rm -rf .cache
-
-      - name: Upgrade Buildozer
-        run: pip install --upgrade buildozer
 
       - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y openjdk-11-jdk unzip libncurses5 libstdc++6
 
-      - name: Build APK
+      - name: Build AAB
         uses: digreatbrian/buildozer-action@v2
         with:
           python-version: 3.8
-          buildozer-cmd: buildozer -v android debug
+          buildozer-cmd: buildozer -v android release
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: package
-          path: ./bin/*.apk
+          path: |
+            ./bin/*.apk
+            ./bin/*.aab
